@@ -1,0 +1,2 @@
+//Jeremy McCormick
+//DoubleLinkedList.h
