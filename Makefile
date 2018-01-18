@@ -1,13 +1,12 @@
 CC=gcc
-CFLAGS=  -Wall -pedantic -ansi -std=c99
+CFLAGS=  -Wall -c -pedantic -ansi -std=c99
 
-all:	single double
-	ar rc liblistlib.a SingleLinkedList.o DoubleLinkedList.o 
+all:	single 
+	ar rc liblistlib.a list.o  
 	ranlib liblistlib.a
 
 single: 
-	$(CC) $(CFLAGS)  SingleLinkedList.c SingleLinkedList.h
-double:
-	$(CC) $(CFLAGS) DoubleLinkedList.c DoubleLinkedList.h 
+	$(CC) $(CFLAGS)  list.c list.h
+
 clean:
 	rm *.o
