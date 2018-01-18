@@ -2,12 +2,13 @@
 // SingleLinkedList.c
 // CS201 Assignment 0
 
-typedef struct NodeTag
+typedef struct Node Node;
+
+struct Node
 {
     Node * next;
     void * data;
-    int (*cmp) (void * data1, void * data2) compare;
-} Node;
+};
 
 Node * head;
 Node * current;
@@ -22,14 +23,16 @@ void * nextNode()
 void addFront(void * data)
 {
     Node newNode;
-    newNode->data = data;
-    newNode->next = head;
-    head = newNode;
+    newNode.data = data;
+    newNode.next = head;
+    head = &newNode;
 }
 
 void addEnd(void * data)
 {
-    Node newNode;
-    current->next = new Node;
+    Node  newNode;
+    newNode.data = data;
+    current.next = &newNode;
 }
-
+int main ()
+{}

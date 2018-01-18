@@ -4,15 +4,14 @@
 
 #ifndef SINGLELINKEDLIST_H
 #define SINGLELINKEDLIST_H
-struct NodeTag;
-typedef struct NodeTag Node;
+typedef struct Node Node;
 
 Node * head;
 Node * current;
 Node * end;
 
-void * nextNode();
-void addFront(void * data);
-void addEnd(void * data);
+void * nextNodeSingle();
+void addFrontSingle(void * data);
+void addEndSingle(void * data);
 
 #endif

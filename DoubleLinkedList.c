@@ -1,14 +1,14 @@
 //Jeremy McCormick
 // DoubleLinkedList.c
 // CS201 Assignment 0
+typedef struct Node Node;
 
-typedef struct NodeTag
+struct Node
 {
     Node * next;
-    Node * prev
+    Node * prev;
     void * data;
-    int (*cmp) (void * data1, void * data2) compare;
-} Node;
+};
 
 Node * head;
 Node * current;
@@ -22,18 +22,19 @@ void * nextNode()
     return current->data;
 }
 
-void addFront(void * data)
+void addFront(void * indata)
 {
-    Node newNode;
-    newNode->data = data;
+    Node * newNode;
+    newNode->data = indata;
     newNode->next = head;
     head->prev = newNode;
     head = newNode;
 }
 
-void addEnd(void * data)
+void addEnd(void * indata)
 {
-    Node newNode;
+    Node * newNode;
+    newNode->data = indata;
     newNode->prev = current;
     current->next = newNode;
 }
