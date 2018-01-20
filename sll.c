@@ -1,7 +1,8 @@
 // Jeremy McCormick
 // sll.c
 // CS201 Assignment 0
-
+#include <assert.h>
+#include <stdio.h>
 #include "sll.h"
 #include "node.h"    
 

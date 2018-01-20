@@ -22,7 +22,7 @@
        insertSLL(items,1,newINTEGER(1));                   //insert at middle
        showItems(items);
        printf("The value ");
-       INTEGER *i = removeSLL(items,0));                   //remove from front
+       INTEGER *i = removeSLL(items,0);                   //remove from front
        displayINTEGER(i,stdout);
        printf(" was removed.\n");
        freeINTEGER(i);
