@@ -29,43 +29,112 @@ SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
 }
 void insertSLL(SLL *items,int index,void *value)
 {
-    NODE * newNode = newNODE(value,0)
-    if(size == 0)
+    NODE * newNode = newNODE(value,0);
+    if(items->size == 0)
     {
         items->head = newNode;
-        items->tail = head;
+        items->tail = items->head;
         items->size++;
         return;
     }
-    if(index == size)
+    if(index == items->size)
     {
-        items->tail->next = newNode;
+        
+        setNODEnext(items->tail,newNode);
         items->tail = newNode;
         return;
     }
-    NODE * current = head;
+    NODE * current = items->head;
     for(int i = 0;i<=index; i++)
     {
         if(i == index)
         {
-            NODE * temp = current->next;            
-            current->next = newNode;
-            newNode->next = temp;
-            return
+            NODE * temp = getNODEnext(current);            
+            setNODEnext(current,newNode);
+            setNODEnext(newNode,temp);
+            return;
         }
+        current = getNODEnext(current);
     }
     return;       
 
 }
 
-void *removeSLL(SLL *items,int index);
-void unionSLL(SLL *recipient,SLL *donor);
-void *getSLL(SLL *items,int index);
-void *setSLL(SLL *items,int index,void *value);
-int sizeSLL(SLL *items);
-void displaySLL(SLL *items,FILE *);
-void displaySLLdebug(SLL *items,FILE *);
-void freeSLL(SLL *items);
+void *removeSLL(SLL *items,int index)
+{
+    NODE * current = items->head;
+    for(int i = 0;i<=index; i++)
+    {
+        if((i+1) == index)
+        {
+            setNODEnext(current,getNODEnext(getNODEnext(current)));  
+            //setNODEnext(current, getNODEnext(current->next));
+            return;
+        }
+    }
+    return;          
+}
 
-    #endif
+void unionSLL(SLL *recipient,SLL *donor)
+{
+    setNODEnext(recipient->tail,donor->head);
+}
+void *getSLL(SLL *items,int index)
+{
+    NODE * current = items->head;
+    for(int i = 0;i<=index; i++)
+    {
+        if((i+1) == index)
+        {        
+            return getNODEvalue(current);
+        }
+    }
+    return;      
+}
+void *setSLL(SLL *items,int index,void *value)
+{
+    NODE * current = items->head;
+    for(int i = 0;i<=index; i++)
+    {
+        if((i+1) == index)
+        {      
+            setNODEvalue(current,value);
+            return getNODEvalue(current);
+        }
+        current = getNODEnext(current);
+    }
+    newNODE(value,current);
+    return 0;      
+}
+int sizeSLL(SLL *items)
+{
+    return items->size;
+}
+void displaySLL(SLL *items,FILE *file)
+{
+    NODE * current = items->head;
+    printf("\n\n{");
+    for(int i = 0; i<items->size; i++)
+    {
+        items->display(getNODEvalue(current),file);
+    }
+    printf("{\n\n");
+}
+
+void displaySLLdebug(SLL *items,FILE *file)
+{
+    
+}
+void freeSLL(SLL *items)
+{
+    NODE * current = items->head;
+    for(int i = 0; i<items->size; i++)
+    {
+        items->free(getNODEvalue(current));
+    }
+    return;
+}
+
+
+
  
