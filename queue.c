@@ -1,27 +1,53 @@
 //Jeremy McCormick
 // queue.c
 // CS201 Assignment 0
-#include "list.h"
 
-void pushQueue(void * indata)
+#include <stdio.h>
+#include "dll.h"
+
+typedef struct queue
 {
-    Node newNode;
-    newNode.data = indata;
-    
-    if(isEmpty())
-    {
-        head = &newNode;
-        //current = &newNode
-        end = &newNode;
-    }
-    newNode.next = head;
-    head = &newNode;
-    return;
-}
-void * popQueue()
+	DLL *dll;
+
+}QUEUE;
+
+QUEUE *newQUEUE(void (*d)(void *,FILE *),void (*f)(void *))
 {
-    void * data = end->data;
-    end = end->prev;
-    return data;
+	QUEUE *items = malloc(sizeof(QUEUE));
+	assert(items!=0);
+	items->dll = newDLL(d,f);
+	return items;
 }
-    
+
+void enqueue(QUEUE *items,void *value)
+{
+	insertDLL(items->dll,0,value);
+}
+
+void *dequeue(QUEUE *items);
+{
+	return removeDLL(items->dll, sizeDLL(items->dll));
+}
+
+void *peekQUEUE(QUEUE *items);
+{
+	return getDLL(items->dll, sizeDLL(items->dll));
+}
+
+int sizeQUEUE(QUEUE *items);
+{
+	sizeDLL(items->dll)l
+}
+void displayQUEUE(QUEUE *items,FILE *);
+{
+	displayDLL(items->dll);
+}
+void displayQUEUEdebug(QUEUE *items,FILE *);
+{
+	displayDLLdebug(items->dll);
+}
+void freeQUEUE(QUEUE *items);
+{
+	freeDLL(items->dll);
+	free(items);
+}

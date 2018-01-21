@@ -18,6 +18,9 @@ sll.o:	node.o
 	
 dll.o:	node.o
 	$(CC) $(CFLAGS) dll.c dll.h 
+	
+string: 
+	$(CC) $(CFLAGS) string.c string.h
 
 test-sll.o:
 	$(CC) $(CFLAGS)  test-sll.c 
