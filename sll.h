@@ -11,7 +11,7 @@
 
     extern SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *)); 
     extern void insertSLL(SLL *items,int index,void *value);
-    extern void *removeSLL(SLL *items,int index);
+    extern void * removeSLL(SLL *items,int index);
     extern void unionSLL(SLL *recipient,SLL *donor);
     extern void *getSLL(SLL *items,int index);
     extern void *setSLL(SLL *items,int index,void *value);

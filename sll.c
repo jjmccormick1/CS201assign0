@@ -1,11 +1,12 @@
 // Jeremy McCormick
 // sll.c
 // CS201 Assignment 0
-#include <assert.h>
+
+
 #include <stdio.h>
 #include "sll.h"
 #include "node.h"    
-
+#include <assert.h>
 typedef struct sll
 {
     NODE *head;
@@ -31,11 +32,12 @@ SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
 void insertSLL(SLL *items,int index,void *value)
 {
     NODE * newNode = newNODE(value,0);
+            items->size++;
     if(items->size == 0)
     {
         items->head = newNode;
         items->tail = items->head;
-        items->size++;
+        setNODEnext(newNode,NULL);
         return;
     }
     if(index == items->size)
@@ -43,42 +45,45 @@ void insertSLL(SLL *items,int index,void *value)
         
         setNODEnext(items->tail,newNode);
         items->tail = newNode;
+        setNODEnext(newNode,NULL);
         return;
     }
     NODE * current = items->head;
-    for(int i = 0;i<=index; i++)
+    for(int i = 0;i<index; i++)
     {
         if(i == index)
         {
             NODE * temp = getNODEnext(current);            
             setNODEnext(current,newNode);
             setNODEnext(newNode,temp);
+            free(temp);
             return;
         }
         current = getNODEnext(current);
     }
-    return;       
-
 }
 
-void *removeSLL(SLL *items,int index)
+void * removeSLL(SLL *items,int index)
 {
     NODE * current = items->head;
-    for(int i = 0;i<=index; i++)
+    for(int i = 0;i<index; i++)
     {
         if((i+1) == index)
         {
             setNODEnext(current,getNODEnext(getNODEnext(current)));  
             //setNODEnext(current, getNODEnext(current->next));
-            return;
+            return getNODEvalue(current);
         }
-    }
-    return;          
+        current = getNODEnext(current);
+    }         
+    return getNODEvalue(current);
 }
 
 void unionSLL(SLL *recipient,SLL *donor)
 {
     setNODEnext(recipient->tail,donor->head);
+    recipient->size += donor->size;
+    freeSLL(donor);
 }
 void *getSLL(SLL *items,int index)
 {
@@ -90,7 +95,7 @@ void *getSLL(SLL *items,int index)
             return getNODEvalue(current);
         }
     }
-    return;      
+    return NULL;      
 }
 void *setSLL(SLL *items,int index,void *value)
 {
@@ -114,25 +119,40 @@ int sizeSLL(SLL *items)
 void displaySLL(SLL *items,FILE *file)
 {
     NODE * current = items->head;
-    printf("\n\n{");
-    for(int i = 0; i<items->size; i++)
+    printf("{");
+    for(int i =0; i<items->size;i++)
     {
         items->display(getNODEvalue(current),file);
+        current = getNODEnext(current);
     }
-    printf("{\n\n");
+    printf("}");
 }
 
 void displaySLLdebug(SLL *items,FILE *file)
 {
+    NODE * current = items->head;
+    printf("head->");
     
+    printf("{");
+    for(int i =0; i<items->size;i++)
+    {
+        if(getNODEnext(current) == 0)
+            printf("}, tail->{");
+        items->display(getNODEvalue(current),file);
+        current = getNODEnext(current);
+    }
+    printf("}");
 }
 void freeSLL(SLL *items)
 {
     NODE * current = items->head;
-    for(int i = 0; i<items->size; i++)
+    for(int i =0; i<items->size;i++)
     {
         items->free(getNODEvalue(current));
+        current = getNODEnext(current);
+        free(current);
     }
+    free(items);
     return;
 }
 
