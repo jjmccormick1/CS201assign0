@@ -1,4 +1,4 @@
-#include <stdio.h>
+	#include <stdio.h>
    #include <stdlib.h>
    #include "sll.h"
    #include "integer.h"
@@ -13,7 +13,7 @@
        printf(".\n");
        }
 
-   int main(int argc,char **argv)
+   int main(void)
        {
        SLL *items = newSLL(displayINTEGER,freeINTEGER);
        showItems(items);

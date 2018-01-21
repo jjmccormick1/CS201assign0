@@ -1,7 +1,7 @@
 #include <stdio.h>
-   #include <stdlib.h>
-   #include "dll.h"
-   #include "integer.h"
+#include <stdlib.h>
+#include "dll.h"
+#include "integer.h"
 
    static void showItems(DLL *items)
        {
@@ -9,16 +9,16 @@
        displayDLL(items,stdout);
        printf(".\n");
        printf("The items (debugged) are ");
-       displaySLLdebug(items,stdout);
+       displayDLLdebug(items,stdout);
        printf(".\n");
        }
 
-   int main(int argc,char **argv)
+   int main(void)
        {
         DLL *items = newDLL(displayINTEGER,freeINTEGER);
        showItems(items);
        insertDLL(items,0,newINTEGER(3));                   //insert at front
-       insertDLL(items,sizeSLL(items),newINTEGER(2));      //insert at back
+       insertDLL(items,sizeDLL(items),newINTEGER(2));      //insert at back
        insertDLL(items,1,newINTEGER(1));                   //insert at middle
        showItems(items);
        printf("The value ");

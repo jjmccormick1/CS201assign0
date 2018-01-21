@@ -7,6 +7,7 @@
 #include "sll.h"
 #include "node.h"    
 #include <assert.h>
+#include <stdlib.h>
 typedef struct sll
 {
     NODE *head;
@@ -14,7 +15,7 @@ typedef struct sll
     int size;
     void (*display)(void *,FILE *);
     void (*free)(void *);
-};
+}SLL;
 
 //d is the display function
 //f is the freeing function
@@ -31,17 +32,18 @@ SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
 }
 void insertSLL(SLL *items,int index,void *value)
 {
-    NODE * newNode = newNODE(value,0);
+	NODE * newNode = newNODE(value,NULL);
+	setNODEnext(newNode,newNode); //set new now next to itself
     items->size++;
     if(items->size == 0)
     {
-        items->head = newNode;
+        items->head = newNODE(value,0);
         items->tail = items->head;
         return;
     }
     if(index == items->size)
     {
-        
+
         setNODEnext(items->tail,newNode);
         items->tail = newNode;
         return;
@@ -51,14 +53,15 @@ void insertSLL(SLL *items,int index,void *value)
     {
         if(i == index)
         {
-            NODE * temp = getNODEnext(current);            
-            setNODEnext(current,newNode);
-            setNODEnext(newNode,temp);
+        	setNODEnext(newNode, getNODEnext(current));
+             setNODEnext(current,newNode);
+
             return;
         }
         if(items->size>1)
             current = getNODEnext(current);
     }
+
 }
 
 void * removeSLL(SLL *items,int index)

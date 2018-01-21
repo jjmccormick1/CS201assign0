@@ -36,9 +36,9 @@ newNODEdouble(void *v,NODE *n, NODE *pre)
     }
 /* accessors */
 
-void  *getNODEvalue(NODE *n) { return n->value; }
-NODE  *getNODEnext(NODE *n)  { return n->next; }
-NODE  *getNODEprev(NODE *n)  { return n->prev; }
+void  * getNODEvalue(NODE *n) { return n->value; }
+NODE  * getNODEnext(NODE *n)  { return n->next; }
+NODE  * getNODEprev(NODE *n)  { return n->prev; }
 /* mutators */
 
 void  setNODEvalue(NODE *n,void *v) { n->value = v; }

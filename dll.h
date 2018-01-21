@@ -2,8 +2,8 @@
 // dll.h
 // CS201 Assignment 0
 
-  #ifndef __DLL_INCLUDED__
-    #define __DLL_INCLUDED__
+  #ifndef __DLL_H__
+    #define __DLL_H__
 
     #include <stdio.h>
 

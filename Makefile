@@ -2,7 +2,7 @@
 CC=gcc
 CFLAGS=  -Wall -Wextra -c -g -pedantic -std=c99 -O0
 LFLAGS=  -Wall -Wextra -pedantic  -std=c99 -g
-
+COREOBJS= node.o sll.o dll.o
 
 all:	lib
 
@@ -38,3 +38,4 @@ test: test-dll test-sll
 	./test-dll
 clean:
 	rm *.o
+	rm *.a

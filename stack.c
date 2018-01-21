@@ -1,24 +1,45 @@
 //Jeremy McCormick
 // stack.c
 // CS201 Assignment 0
-#include "list.h"
 
-void pushStack(void * indata)
-{
-    Node newNode;
-    newNode.data = indata;
-    
-    if(isEmpty())
+#include "sll.h"
+
+#include <stdio.h>
+
+    typedef struct stack
     {
-        head = &newNode;
-        current = &newNode;
-    }
-    newNode.next = current;
-    current = &newNode;
-}
-void * popStack()
+
+    }STACK;
+
+extern STACK *newSTACK(void (*d)(void *,FILE *),void (*f)(void *))
 {
-    void * data = current->data;
-    current = current->next;
+
 }
-    
+extern void push(STACK *items,void *value)
+{
+
+}
+extern void *pop(STACK *items)
+{
+
+}
+extern void *peekSTACK(STACK *items)
+{
+
+}
+extern int sizeSTACK(STACK *items)
+{
+
+}
+extern void displaySTACK(STACK *items,FILE *)
+{
+
+}
+extern void displaySTACKdebug(STACK *items,FILE *)
+{
+
+}
+extern void freeSTACK(STACK *items)
+{
+
+}

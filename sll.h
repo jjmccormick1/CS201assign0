@@ -2,8 +2,8 @@
 // sll.h
 // CS201 Assignment 0
 
-    #ifndef __SLL_INCLUDED__
-    #define __SLL_INCLUDED__
+    #ifndef __SLL_H__
+    #define __SLL_H__
 
     #include <stdio.h>
 
