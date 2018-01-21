@@ -7,7 +7,7 @@
 #include "sll.h"
 #include "node.h"    
 
-typedef struct sll
+typedef struct dll
 {
     NODE *head;
     NODE *tail;
@@ -18,9 +18,9 @@ typedef struct sll
 
 //d is the display function
 //f is the freeing function
-SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
+SLL *newDLL(void (*d)(void *,FILE *),void (*f)(void *))
 {
-    SLL *items = malloc(sizeof(SLL));
+    DLL *items = malloc(sizeof(DLL));
         assert(items != 0);
         items->head = 0;
         items->tail = 0;
@@ -29,7 +29,7 @@ SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
         items->free = f;
         return items;
 }
-void insertSLL(SLL *items,int index,void *value)
+void insertDLL(DLL *items,int index,void *value)
 {
     NODE * newNode = newNODE(value,0);
     if(items->size == 0)
@@ -48,13 +48,15 @@ void insertSLL(SLL *items,int index,void *value)
         return;
     }
     NODE * current = items->head;
-    for(int i = 0;i<=index; i++)
+    for(int i = 0;i<index;i++)
     {
-        if(i == index)
+        if(i == index-1)
         {
             NODE * temp = getNODEnext(current);            
             setNODEnext(current,newNode);
+            setNODEprev(newNode,current);
             setNODEnext(newNode,temp);
+            setNODEprev(temp, newNode);
             return;
         }
         current = getNODEnext(current);
@@ -63,26 +65,28 @@ void insertSLL(SLL *items,int index,void *value)
 
 }
 
-void *removeSLL(SLL *items,int index)
+void *removeDLL(DLL *items,int index)
 {
     NODE * current = items->head;
     for(int i = 0;i<=index; i++)
     {
         if((i+1) == index)
         {
+            void * tmp = getNODEvalue(current);
             setNODEnext(current,getNODEnext(getNODEnext(current)));  
             //setNODEnext(current, getNODEnext(current->next));
-            return;
+            return tmp;
         }
+        current= getNODEnext(current);
     }
-    return;          
+    return getNODEvalue(items->head);          
 }
 
-void unionSLL(SLL *recipient,SLL *donor)
+void unionDLL(DLL *recipient,DLL *donor)
 {
     setNODEnext(recipient->tail,donor->head);
 }
-void *getSLL(SLL *items,int index)
+void *getDLL(DLL *items,int index)
 {
     NODE * current = items->head;
     for(int i = 0;i<=index; i++)
@@ -92,9 +96,9 @@ void *getSLL(SLL *items,int index)
             return getNODEvalue(current);
         }
     }
-    return;      
+    return getNODEvalue(items->head);      
 }
-void *setSLL(SLL *items,int index,void *value)
+void *setDLL(DLL *items,int index,void *value)
 {
     NODE * current = items->head;
     for(int i = 0;i<=index; i++)
@@ -107,13 +111,13 @@ void *setSLL(SLL *items,int index,void *value)
         current = getNODEnext(current);
     }
     newNODE(value,current);
-    return 0;      
+     return getNODEvalue(items->head);     
 }
-int sizeSLL(SLL *items)
+int sizeDLL(DLL *items)
 {
     return items->size;
 }
-void displaySLL(SLL *items,FILE *file)
+void displayDLL(DLL *items,FILE *file)
 {
     NODE * current = items->head;
     printf("\n\n{");
@@ -124,11 +128,11 @@ void displaySLL(SLL *items,FILE *file)
     printf("{\n\n");
 }
 
-void displaySLLdebug(SLL *items,FILE *file)
+void displayDLLdebug(DLL *items,FILE *file)
 {
     
 }
-void freeSLL(SLL *items)
+void freeDLL(DLL *items)
 {
     NODE * current = items->head;
     for(int i = 0; i<items->size; i++)

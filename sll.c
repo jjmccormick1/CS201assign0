@@ -32,12 +32,11 @@ SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
 void insertSLL(SLL *items,int index,void *value)
 {
     NODE * newNode = newNODE(value,0);
-            items->size++;
+    items->size++;
     if(items->size == 0)
     {
         items->head = newNode;
         items->tail = items->head;
-        setNODEnext(newNode,NULL);
         return;
     }
     if(index == items->size)
@@ -45,21 +44,20 @@ void insertSLL(SLL *items,int index,void *value)
         
         setNODEnext(items->tail,newNode);
         items->tail = newNode;
-        setNODEnext(newNode,NULL);
         return;
     }
     NODE * current = items->head;
-    for(int i = 0;i<index; i++)
+    for(int i = 0;i<items->size; i++)
     {
         if(i == index)
         {
             NODE * temp = getNODEnext(current);            
             setNODEnext(current,newNode);
             setNODEnext(newNode,temp);
-            free(temp);
             return;
         }
-        current = getNODEnext(current);
+        if(items->size>1)
+            current = getNODEnext(current);
     }
 }
 
@@ -120,7 +118,7 @@ void displaySLL(SLL *items,FILE *file)
 {
     NODE * current = items->head;
     printf("{");
-    for(int i =0; i<items->size;i++)
+    for(int i =1; i<items->size;i++)
     {
         items->display(getNODEvalue(current),file);
         current = getNODEnext(current);
@@ -134,13 +132,14 @@ void displaySLLdebug(SLL *items,FILE *file)
     printf("head->");
     
     printf("{");
-    for(int i =0; i<items->size;i++)
+    for(int i =1; i<(items->size-1);i++)
     {
-        if(getNODEnext(current) == 0)
-            printf("}, tail->{");
         items->display(getNODEvalue(current),file);
         current = getNODEnext(current);
     }
+    printf("}, tail->{");
+    if(items->size>0)
+        items->display(getNODEvalue(current),file);
     printf("}");
 }
 void freeSLL(SLL *items)
