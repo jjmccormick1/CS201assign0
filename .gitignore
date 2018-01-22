@@ -1,1 +1,4 @@
 *.kate-swp
+*.o
+*.a
+*.gch
