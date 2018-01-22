@@ -30,7 +30,7 @@ SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
         items->free = f;
         return items;
 }
-void insertSLL(SLL *items,int index,void *value)
+void insertSLL(SLL *items,int index,void * value)
 {
 	NODE * newNode = newNODE(value,0);
 	setNODEnext(newNode,newNode); //set its next temp to the end for traversal purposes
@@ -38,21 +38,26 @@ void insertSLL(SLL *items,int index,void *value)
     {
         setNODEnext(newNode, items->head); //set new Nodes next to current head
         items->head = newNode; //make newNode the new head
-        items->tail = newNode; //make newNode the tail
+        
+        if(items->size == 0)
+            items->tail = newNode; //make newNode the tail if empty
         items->size += 1;
+        
         return;
     }
     if(index == items->size) //Insert at end
     {
         setNODEnext(items->tail, newNode); //set current tails next to newnode
         items->tail = newNode; //make newNode the new tail
+        if(items->size == 0)
+            items->head=newNode; //if empty, make it head as well
         items->size += 1;
         return;
     }
     
     NODE * current = items->head; //Initialize a pointer for transversal of list. Visualize as splicing into
     int i = 1; //set as 1 so current lags behind
-    while(current != 0)
+    while(current != 0 && i < items->size)
     {
         if (i == index)
         {
@@ -64,12 +69,13 @@ void insertSLL(SLL *items,int index,void *value)
         current = getNODEnext(current);
         i++;
     }
+    return;
 }
 
 void * removeSLL(SLL *items,int index)
 {
     NODE * current = items->head;
-    int i = 1;
+    int i = 0;
     while(current != 0 )
     {
         if((i) == index)
@@ -80,6 +86,7 @@ void * removeSLL(SLL *items,int index)
             return getNODEvalue(current);
         }
         current = getNODEnext(current);
+        i++;
     }         
     return getNODEvalue(current);
 }
@@ -93,15 +100,15 @@ void unionSLL(SLL *recipient,SLL *donor)
 void *getSLL(SLL *items,int index)
 {
     NODE * current = items->head;
-    int i = 0;
     
-    while(current != 0)
+    for(int i =0; i<items->size ; i++)
     {
-        if(i == index)
+        if(i == index && current != 0)
         {        
             return getNODEvalue(current);
         }
-        cuurent = getNODEnext(current);
+        current = getNODEnext(current);
+        
     }
     return NULL;      
 }
@@ -110,7 +117,7 @@ void *setSLL(SLL *items,int index,void *value)
     NODE * current = items->head;
     for(int i = 0;i<=index; i++)
     {
-        if((i+1) == index)
+        if((i) == index)
         {      
             setNODEvalue(current,value);
             return getNODEvalue(current);
@@ -130,6 +137,7 @@ void displaySLL(SLL *items,FILE *file)
     printf("{");
     while (current != 0)
     {
+        getNODEvalue(current);
         items->display(getNODEvalue(current),file);
         current = getNODEnext(current);
     }
@@ -142,7 +150,7 @@ void displaySLLdebug(SLL *items,FILE *file)
     printf("head->");
     
     printf("{");
-    for(int i =1; i<(items->size-1);i++)
+    while(current != 0)
     {
         items->display(getNODEvalue(current),file);
         current = getNODEnext(current);
