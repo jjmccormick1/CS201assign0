@@ -57,7 +57,7 @@ void displayNODEdebug(NODE *n,FILE *fp,void (*d)(FILE *,void *))
     {
     fprintf(fp,"[[");
     d(fp,n->value);
-    fprintf(fp,"@%p->%p]]",n,n->next);
+    fprintf(fp,"@%p->%p]]",(void *)n,(void *)n->next);
     }
 
 void

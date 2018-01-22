@@ -8,14 +8,14 @@
 #include <assert.h>
 #include <stdlib.h>
 
-typedef struct dll
+struct dll
 {
     NODE *head;
     NODE *tail;
     int size;
     void (*display)(void *,FILE *);
     void (*free)(void *);
-}DLL;
+};
 
 //d is the display function
 //f is the freeing function
@@ -33,7 +33,7 @@ DLL *newDLL(void (*d)(void *,FILE *),void (*f)(void *))
 void insertDLL(DLL *items,int index,void *value)
 {
     NODE * newNode = newNODE(value,0);
-    setNODEnext(newNode,newNode); //set new now next to itself
+    //setNODEnext(newNode,newNode); //set new now next to itself
     if(items->size == 0)
     {
         items->head = newNode;
@@ -50,15 +50,15 @@ void insertDLL(DLL *items,int index,void *value)
         return;
     }
     NODE * current = items->head;
-    for(int i = 0;i<index;i++)
+    for(int i = 1;i<index;i++)
     {
-        if(i == index-1)
+        if(i == index)
         {
-            NODE * temp = getNODEnext(current);            
+            NODE * currentNext = getNODEnext(current);           
             setNODEnext(current,newNode);
             setNODEprev(newNode,current);
-            setNODEnext(newNode,temp);
-            setNODEprev(temp, newNode);
+            setNODEnext(newNode,currentNext);
+            setNODEprev(currentNext, newNode);
             return;
         }
         current = getNODEnext(current);

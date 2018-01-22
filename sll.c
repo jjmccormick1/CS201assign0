@@ -8,14 +8,14 @@
 #include "node.h"    
 #include <assert.h>
 #include <stdlib.h>
-typedef struct sll
+struct sll
 {
     NODE *head;
     NODE *tail;
     int size;
     void (*display)(void *,FILE *);
     void (*free)(void *);
-}SLL;
+};
 
 //d is the display function
 //f is the freeing function
@@ -32,47 +32,48 @@ SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
 }
 void insertSLL(SLL *items,int index,void *value)
 {
-	NODE * newNode = newNODE(value,NULL);
-	setNODEnext(newNode,newNode); //set new now next to itself
-    items->size++;
-    if(items->size == 0)
+	NODE * newNode = newNODE(value,0);
+	//setNODEnext(newNode,newNode);
+    if(index == 0) //inserting at front
     {
-        items->head = newNODE(value,0);
-        items->tail = items->head;
+        setNODEnext(newNode, items->head); //set new Nodes next to current head
+        items->head = newNode; //make newNode the new head
+        items->tail = newNode; //make newNode the tail
+        items->size += 1;
         return;
     }
-    if(index == items->size)
+    if(index == items->size) //Insert at end
     {
-
-        setNODEnext(items->tail,newNode);
-        items->tail = newNode;
+        setNODEnext(items->tail, newNode); //set current tails next to newnode
+        items->tail = newNode; //make newNode the new tail
+        items->size += 1;
         return;
     }
-    NODE * current = items->head;
-    for(int i = 0;i<items->size; i++)
+    
+    NODE * current = items->head; //Initialize a pointer for transversal of list. Visualize as splicing into
+    for(int i = 1; i < items->size; i++)//Start at 1 so current lags by 1
     {
-        if(i == index)
+        if (i == index)
         {
-        	setNODEnext(newNode, getNODEnext(current));
-             setNODEnext(current,newNode);
-
+            setNODEnext(newNode,getNODEnext(current)); //set newNode to the current pointers  next
+            setNODEnext(current,newNODE); //Set current nect to newNode
+            items->size += 1;
             return;
         }
-        if(items->size>1)
-            current = getNODEnext(current);
+        current = getNODEnext(current);
     }
-
 }
 
 void * removeSLL(SLL *items,int index)
 {
     NODE * current = items->head;
-    for(int i = 0;i<index; i++)
+    for(int i = 0;i<items->size; i++)
     {
-        if((i+1) == index)
+        if((i) == index)
         {
             setNODEnext(current,getNODEnext(getNODEnext(current)));  
             //setNODEnext(current, getNODEnext(current->next));
+            items->size-=1;
             return getNODEvalue(current);
         }
         current = getNODEnext(current);
@@ -91,7 +92,7 @@ void *getSLL(SLL *items,int index)
     NODE * current = items->head;
     for(int i = 0;i<=index; i++)
     {
-        if((i+1) == index)
+        if(i == index)
         {        
             return getNODEvalue(current);
         }
@@ -121,7 +122,7 @@ void displaySLL(SLL *items,FILE *file)
 {
     NODE * current = items->head;
     printf("{");
-    for(int i =1; i<items->size;i++)
+    for(int i =0; i<items->size;i++)
     {
         items->display(getNODEvalue(current),file);
         current = getNODEnext(current);

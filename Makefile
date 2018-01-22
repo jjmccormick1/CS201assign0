@@ -1,23 +1,16 @@
 
 CC=gcc
-CFLAGS=  -Wall -Wextra -c -g -pedantic -std=c99 -O0
+CFLAGS=  -Wall -Wextra -c -ggdb -pedantic -std=c99 -O0
 LFLAGS=  -Wall -Wextra -pedantic  -std=c99 -g
 COREOBJS= node.o sll.o dll.o
 
 all:	lib
 
-lib:	$(COREOBJS)
+lib:	
+	$(CC) $(CFLAGS) node.c node.h sll.c sll.h dll.c dll.h
 	ar rc liblistlib.a $(COREOBJS)
 	ranlib liblistlib.a
 
-node.o: 
-	$(CC) $(CFLAGS)  node.c node.h
-	
-sll.o:	node.o
-	$(CC) $(CFLAGS) sll.c sll.h
-	
-dll.o:	node.o
-	$(CC) $(CFLAGS) dll.c dll.h 
 	
 string: 
 	$(CC) $(CFLAGS) string.c string.h
@@ -34,11 +27,11 @@ test-dll.o:
 test-dll: all integer.o test-dll.o
 	$(CC) $(LFLAGS) test-dll.o integer.o -L. -llistlib -o test-dll
 
-test: test-dll test-sll
-	echo "Testing SLL .. \n"
+test: clean test-dll test-sll
+	@echo "Testing SLL .. \n"
 	./test-sll
-	echo "Testing DLL .. \n"
+	@echo "Testing DLL .. \n"
 	./test-dll
 clean:
-	rm *.o
-	rm *.a
+	@rm -f *.o || true
+	@rm -f *.a || true
