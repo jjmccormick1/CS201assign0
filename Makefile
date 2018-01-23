@@ -35,3 +35,4 @@ test: clean test-dll test-sll
 clean:
 	@rm -f *.o || true
 	@rm -f *.a || true
+	@rm -f *.gch || true

@@ -33,6 +33,10 @@ SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
 void insertSLL(SLL *items,int index,void * value)
 {
 	NODE * newNode = newNODE(value,0);
+    
+    if (value !=  getNODEvalue(newNode))
+        printf("Error! newNode value not equal to set value");
+    
 	setNODEnext(newNode,newNode); //set its next temp to the end for traversal purposes
     if(index == 0) //inserting at front
     {
