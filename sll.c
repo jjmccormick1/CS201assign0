@@ -33,7 +33,6 @@ SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
 void insertSLL(SLL *items,int index,void * value)
 {
 	NODE * newNode = newNODE(value,0);
-    
     if (value !=  getNODEvalue(newNode))
         printf("Error! newNode value not equal to set value");
     
@@ -58,19 +57,22 @@ void insertSLL(SLL *items,int index,void * value)
         items->size += 1;
         return;
     }
-    
-    NODE * current = items->head; //Initialize a pointer for transversal of list. Visualize as splicing into
+    NODE * current  = newNODE(value,0);
+    current = items->head; //Initialize a pointer for transversal of list. Visualize as splicing into
+    current = getNODEnext(current);
+    NODE * trailing = items->head;
     int i = 1; //set as 1 so current lags behind
     while(current != 0 && i < items->size)
     {
         if (i == index)
         {
-            setNODEnext(newNode,getNODEnext(current)); //set newNode to the current pointers  next
-            setNODEnext(current,newNODE); //Set current nect to newNode
+            setNODEnext(newNode,current); //set newNode to the current pointers  next
+            setNODEnext(trailing,newNODE); //Set current nect to newNode
             items->size += 1;
             return;
         }
         current = getNODEnext(current);
+        trailing = getNODEnext(trailing);
         i++;
     }
     return;
@@ -99,7 +101,7 @@ void unionSLL(SLL *recipient,SLL *donor)
 {
     setNODEnext(recipient->tail,donor->head);
     recipient->size += donor->size;
-    freeSLL(donor);
+    //freeSLL(donor);
 }
 void *getSLL(SLL *items,int index)
 {
@@ -135,14 +137,14 @@ int sizeSLL(SLL *items)
 {
     return items->size;
 }
-void displaySLL(SLL *items,FILE *file)
+void displaySLL(SLL *items,FILE *f)
 {
     NODE * current = items->head;
     printf("{");
     while (current != 0)
     {
-        getNODEvalue(current);
-        items->display(getNODEvalue(current),file);
+        void * val = getNODEvalue(current);
+        items->display(val,f);
         current = getNODEnext(current);
     }
     printf("}");
