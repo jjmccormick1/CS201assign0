@@ -14,7 +14,7 @@ INTEGER *
 newINTEGER(int x)
     {
     INTEGER *p = malloc(sizeof(INTEGER));
-    //assert(p != 0);
+    assert(p != 0);
     p->value = x;
     return p;
     }
@@ -36,7 +36,7 @@ setINTEGER(INTEGER *v,int x)
 void 
 displayINTEGER(void *v,FILE *fp)
     {
-    fprintf(fp,"%d",(int)getINTEGER((INTEGER *) v));
+    fprintf(fp,"%d",(int)getINTEGER(v));
     }
 
 int 

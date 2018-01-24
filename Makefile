@@ -8,8 +8,8 @@ all:	lib
 
 lib:	
 	@$(CC) $(CFLAGS) node.c node.h sll.c sll.h dll.c dll.h
-	@ar rc liblistlib.a $(COREOBJS)
-	@ranlib liblistlib.a
+	#@ar rc liblistlib.a $(COREOBJS)
+	#@ranlib liblistlib.a
 
 	
 string: 
@@ -19,13 +19,13 @@ test-sll.o:
 	@$(CC) $(CFLAGS)  test-sll.c 
 	
 test-sll: all integer.o test-sll.o
-	@$(CC) $(LFLAGS) test-sll.o integer.o -L. -llistlib -o test-sll
+	@$(CC) $(LFLAGS) test-sll.o integer.o sll.o dll.o node.o -o test-sll
 
 test-dll.o: 
 	@$(CC) $(CFLAGS)  test-dll.c
 	
 test-dll: all integer.o test-dll.o
-	@$(CC) $(LFLAGS) test-dll.o integer.o -L. -llistlib -o test-dll
+	@$(CC) $(LFLAGS) test-dll.o integer.o sll.o dll.o node.o -o test-dll
 
 test: clean test-dll test-sll
 	@echo "Testing SLL .. \n"

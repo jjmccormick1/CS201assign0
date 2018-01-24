@@ -21,6 +21,7 @@ newNODE(void *v,NODE *n)
     p->value = v;
     p->next = n;
     p->prev = NULL;
+    printf("newNODE : %d\n",(int)p->value);
     return p;
     }
 

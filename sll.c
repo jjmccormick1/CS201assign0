@@ -39,35 +39,36 @@ void insertSLL(SLL *items,int index,void * value)
 	setNODEnext(newNode,newNode); //set its next temp to the end for traversal purposes
     if(index == 0) //inserting at front
     {
-        setNODEnext(newNode, items->head); //set new Nodes next to current head
-        items->head = newNode; //make newNode the new head
+        setNODEnext((NODE *)newNode, items->head); //set new Nodes next to current head
+        items->head = (NODE *)newNode; //make newNode the new head
         
         if(items->size == 0)
-            items->tail = newNode; //make newNode the tail if empty
+            items->tail = (NODE *)newNode; //make newNode the tail if empty
         items->size += 1;
         
         return;
     }
     if(index == items->size) //Insert at end
     {
-        setNODEnext(items->tail, newNode); //set current tails next to newnode
-        items->tail = newNode; //make newNode the new tail
+        setNODEnext(items->tail, (NODE *)newNode); //set current tails next to newnode
+        items->tail = (NODE *)newNode; //make newNode the new tail
         if(items->size == 0)
-            items->head=newNode; //if empty, make it head as well
+            items->head=(NODE *)newNode; //if empty, make it head as well
         items->size += 1;
         return;
     }
-    NODE * current  = newNODE(value,0);
+    NODE * current  = (NODE *)newNODE(value,0);
     current = items->head; //Initialize a pointer for transversal of list. Visualize as splicing into
-    current = getNODEnext(current);
-    NODE * trailing = items->head;
+    current = (NODE *)getNODEnext(current);
+    NODE * trailing = (NODE *)items->head;
     int i = 1; //set as 1 so current lags behind
-    while(current != 0 && i < items->size)
+    
+    while(i < items->size)
     {
         if (i == index)
         {
-            setNODEnext(newNode,current); //set newNode to the current pointers  next
-            setNODEnext(trailing,newNODE); //Set current nect to newNode
+            setNODEnext((NODE *)newNode,current); //set newNode to the current pointers  next
+            setNODEnext(trailing,(NODE *)newNODE); //Set current nect to newNode
             items->size += 1;
             return;
         }
@@ -140,8 +141,9 @@ int sizeSLL(SLL *items)
 void displaySLL(SLL *items,FILE *f)
 {
     NODE * current = items->head;
+    printf("Test: ");
     printf("{");
-    while (current != 0)
+    for(int i =0; i < items->size ; i++)
     {
         void * val = getNODEvalue(current);
         items->display(val,f);
