@@ -6,12 +6,12 @@
 typedef struct node NODE; /* forward declaration of our structure */
 
 extern NODE  *newNODE(void *value,NODE *next);     /* constructor */
-extern void  * getNODEvalue(NODE *n);
+extern void  *getNODEvalue(NODE *n);
 extern NODE  *getNODEnext(NODE *n);
 extern NODE  *getNODEprev(NODE *n);
+extern void  setNODEprev(NODE *n, NODE *);
 extern void  setNODEvalue(NODE *n,void *);
-extern void  setNODEnext(NODE *n,NODE *p);
-extern void  setNODEprev(NODE *n, NODE *p);
+extern void  setNODEnext(NODE *n,NODE *); //testing NODE * vs NODE * p
 extern void  displayNODE(NODE *n,FILE *fp,void (*display)(FILE *,void *));
 extern void  displayNODEdebug(NODE *n,FILE *fp,void (*display)(FILE *,void *));
 extern void  freeNODE(NODE *n,void (*release)(void *));

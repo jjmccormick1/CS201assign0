@@ -8,13 +8,20 @@ all:	lib
 
 lib:	
 	@$(CC) $(CFLAGS) node.c node.h sll.c sll.h dll.c dll.h
-	#@ar rc liblistlib.a $(COREOBJS)
+	#@ar rc	 liblistlib.a $(COREOBJS)
 	#@ranlib liblistlib.a
 
 	
 string: 
 	@$(CC) $(CFLAGS) string.c string.h
+	
+test-node : 
+	@$(CC) $(CFLAGS) nodetest.c node.c node.h
+	@$(CC) $(LFLAGS) nodetest.o node.o -o nodetest
 
+integer.o: 
+	$(CC) $(CFLAGS) integer.c integer.h
+	
 test-sll.o:
 	@$(CC) $(CFLAGS)  test-sll.c 
 	
