@@ -20,6 +20,7 @@ newNODE(void *v,NODE *n)
     if (p == 0) { fprintf(stderr,"out of memory\n"); exit(1); }
     p->value = v;
     p->next = n;
+    p->prev = NULL;
     return p;
     }
 
