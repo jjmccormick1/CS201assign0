@@ -1,16 +1,12 @@
- 
-#ifndef __INTEGER_H__
-#define __INTEGER_H__
+#ifndef __STRING_INCLUDED__
+#define __STRING_INCLUDED__
 
-#include <stdio.h>
+typedef struct string STRING;
 
-typedef struct STRING STRING;
+extern STRING * newSTRING(char * x);
+extern STRING * getINTEGER(INTEGER *v);
+extern STRING * setSTRING(STRING * v,char * x);
+extern void displaySTRING(void *v,FILE *fp);
+extern int compareSTRING(void *v,void *w);
+extern void freeSTRING(void *v);
 
-STRING *newSTRING(int);
-extern int getSTRING(STRING *);
-extern int setSTRING(STRING *,int);
-extern int compareSTRING(void *,void *);
-extern void displaySTRING(void *,FILE *);
-extern void freeSTRING(void *);
-
-#endif
