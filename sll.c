@@ -30,23 +30,28 @@ SLL *newSLL(void (*d)(void *,FILE *),void (*f)(void *))
 void insertSLL(SLL *items,int index,void *value)
 {
     NODE * newNode = newNODE(value, NULL); //Create new node with passed value
+    if(items->size == 0)
+    {
+            items->head=newNode;
+            items->tail=newNode;
+            items->size+=1;
+            return;
+    }
     items->size += 1;
     if(index == 0) //Insert at front
     {
         setNODEnext(newNode,items->head); //set new nodes next to current head
         items->head = newNode; //make new node the head
-        if(items->size == 1)
-            items->head = newNode;
+        return;
     }
     
-    else if( index == items->size) //insert at end
+    if( index == items->size) //insert at end
     {
         setNODEnext(items->tail,newNode); //set tails next to new node
         items->tail = newNode; //make new node the tail
+        return;
     }
     
-    else
-    {
         NODE * current = items->head; //Make a couple temp
         NODE * trailing = items->head;//pointers for insertion
         current = getNODEnext(current);//get current one step ahead
@@ -63,7 +68,7 @@ void insertSLL(SLL *items,int index,void *value)
             trailing = getNODEnext(trailing);
                 
         }
-    }
+    
     return;
 }
 void * removeSLL(SLL *items,int index)
@@ -71,7 +76,9 @@ void * removeSLL(SLL *items,int index)
     items->size -= 1;
     if(index == 0) //remove at front
     {
+        void * val = getNODEvalue(items->head);
         items->head = getNODEnext(items->head);
+        return val;
     }
     
     else
@@ -157,12 +164,14 @@ void displaySLLdebug(SLL *items,FILE * fp)
 {
     NODE * current = items->head;
     printf("head->{"); 
-    for(int i = 0; i < items->size -1 ; i++)
+    for(int i = 0; i < items->size -1 && items->size > 0; i++)
     {
             items->display(getNODEvalue(current), fp);
+            current = getNODEnext(current);
     }
     printf("}, tail->{");
-    items->display(getNODEvalue(items->tail),fp);
+    if(items->size > 0)
+        items->display(getNODEvalue(items->tail),fp);
     printf("}\n");
     return;
 }
