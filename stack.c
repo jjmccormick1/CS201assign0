@@ -4,7 +4,9 @@
 
     #include <stdio.h>
 #include <assert.h>
+#include <stdlib.h>
 #include "dll.h"
+#include "stack.h"
 
 struct stack{
     DLL * dll;

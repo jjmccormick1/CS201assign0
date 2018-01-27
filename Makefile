@@ -2,14 +2,14 @@
 CC=gcc
 CFLAGS=  -Wall -Wextra -c -ggdb -pedantic -std=c99 -O0
 LFLAGS=  -Wall -Wextra -pedantic  -std=c99 -ggdb
-COREOBJS= node.o sll.o dll.o
+COREOBJS= node.o sll.o dll.o stack.o queue.o
 
 all:	lib
 
 lib:	
-	@$(CC) $(CFLAGS) node.c node.h sll.c sll.h dll.c dll.h
-	#@ar rc	 liblistlib.a $(COREOBJS)
-	#@ranlib liblistlib.a
+	@$(CC) $(CFLAGS) node.c node.h sll.c sll.h dll.c dll.h stack.c stack.h queue.c queue.h
+	@ar rc	 liblistlib.a $(COREOBJS)
+	@ranlib liblistlib.a
 
 	
 string: 

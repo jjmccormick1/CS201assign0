@@ -4,7 +4,9 @@
  
 #include <stdio.h>
 #include <assert.h>
+#include <stdlib.h>
 #include "sll.h"
+#include "queue.h"
 
 struct queue {
     SLL * sll;
@@ -45,9 +47,9 @@ void displayQUEUE(QUEUE *items,FILE * fp)
         }
         fprintf(">",fp);
 }
-void displayQUEUEdebug(QUEUE *items,FILE *)
+void displayQUEUEdebug(QUEUE *items,FILE * fp)
 {
-    displaySLLdebug(items->sll)
+    displaySLLdebug(items->sll, fp)
 }
 
 void freeQUEUE(QUEUE *items)
