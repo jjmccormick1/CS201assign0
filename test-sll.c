@@ -17,13 +17,9 @@
        {
        SLL *items = newSLL(&displayINTEGER,&freeINTEGER);
        showItems(items);
-       printf("Testing insert at front\n");
-       insertSLL(items,0,newINTEGER(3));                   //insert at front
-       printf("Testing insert at back\n");       
+       insertSLL(items,0,newINTEGER(3));                   //insert at front    
        insertSLL(items,sizeSLL(items),newINTEGER(2));      //insert at bac
-       printf("Testing insert at middle\n");
        insertSLL(items,1,newINTEGER(1));                   //insert at middle
-       printf("Testing show items\n");
        showItems(items);
        printf("The value ");
        INTEGER *i = removeSLL(items,0);                   //remove from front

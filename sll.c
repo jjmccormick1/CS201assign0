@@ -37,11 +37,12 @@ void insertSLL(SLL *items,int index,void *value)
             items->size+=1;
             return;
     }
-    items->size += 1;
+
     if(index == 0) //Insert at front
     {
         setNODEnext(newNode,items->head); //set new nodes next to current head
         items->head = newNode; //make new node the head
+        items->size += 1;
         return;
     }
     
@@ -49,9 +50,10 @@ void insertSLL(SLL *items,int index,void *value)
     {
         setNODEnext(items->tail,newNode); //set tails next to new node
         items->tail = newNode; //make new node the tail
+        items->size += 1;
         return;
     }
-    
+        items->size += 1;
         NODE * current = items->head; //Make a couple temp
         NODE * trailing = items->head;//pointers for insertion
         current = getNODEnext(current);//get current one step ahead
@@ -68,7 +70,6 @@ void insertSLL(SLL *items,int index,void *value)
             trailing = getNODEnext(trailing);
                 
         }
-    
     return;
 }
 void * removeSLL(SLL *items,int index)
@@ -156,7 +157,7 @@ void displaySLL(SLL *items,FILE * fp)
             items->display(getNODEvalue(current), fp);
             current = getNODEnext(current);
     }
-    printf("}\n");
+    printf("}");
     return;
     
 }
@@ -172,7 +173,7 @@ void displaySLLdebug(SLL *items,FILE * fp)
     printf("}, tail->{");
     if(items->size > 0)
         items->display(getNODEvalue(items->tail),fp);
-    printf("}\n");
+    printf("}");
     return;
 }
 void freeSLL(SLL *items)
