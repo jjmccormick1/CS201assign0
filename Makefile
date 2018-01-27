@@ -7,7 +7,7 @@ COREOBJS= node.o sll.o dll.o
 all:	lib
 
 lib:	
-	@$(CC) $(CFLAGS) node.c node.h sll.c sll.h 
+	@$(CC) $(CFLAGS) node.c node.h sll.c sll.h dll.c dll.h
 	#@ar rc	 liblistlib.a $(COREOBJS)
 	#@ranlib liblistlib.a
 
@@ -34,9 +34,11 @@ test-dll.o:
 test-dll: all integer.o test-dll.o
 	@$(CC) $(LFLAGS) test-dll.o integer.o sll.o dll.o node.o -o test-dll
 
-test: clean  test-sll
+test: clean  test-sll test-dll
 	@echo "Testing SLL .. \n"
 	@./test-sll
+	@echo "Testing DLL .. \n"
+	@./test-dll
 clean:
 	@rm -f *.o || true
 	@rm -f *.a || true
