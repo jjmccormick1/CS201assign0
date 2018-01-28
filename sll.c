@@ -53,7 +53,7 @@ void insertSLL(SLL *items,int index,void *value)
         items->size += 1;
         return;
     }
-        items->size += 1;
+
         NODE * current = items->head; //Make a couple temp
         NODE * trailing = items->head;//pointers for insertion
         current = getNODEnext(current);//get current one step ahead
@@ -64,6 +64,7 @@ void insertSLL(SLL *items,int index,void *value)
             {
                     setNODEnext(trailing,newNode);
                     setNODEnext(newNode, current);
+                            items->size += 1;
                     return;
             }
             current = getNODEnext(current); //set both to next
@@ -74,16 +75,31 @@ void insertSLL(SLL *items,int index,void *value)
 }
 void * removeSLL(SLL *items,int index)
 {
-    items->size -= 1;
+
     if(index == 0) //remove at front
     {
         void * val = getNODEvalue(items->head);
         items->head = getNODEnext(items->head);
+            items->size -= 1;
         return val;
     }
-    
-    else
+    if(index == items->size-1 )
     {
+        void * val = getNODEvalue(items->tail);
+        
+        NODE * current = items->head;
+        for(int i = 0; i<items->size; i++)
+        {
+                if(getNODEnext(getNODEnext(current)) == 0)
+                    break;
+                current = getNODEnext(current);
+        }
+        items->tail = getNODEnext(current);
+        setNODEnext(current, items->tail);
+        items->size -= 1;
+        return val;
+    }
+
         NODE * current = items->head; //Make a couple temp
         NODE * trailing = items->head;//pointers for insertion
         current = getNODEnext(current);//get current one step ahead
@@ -94,13 +110,14 @@ void * removeSLL(SLL *items,int index)
             {
                     void * val = getNODEvalue(current);
                     setNODEnext(trailing,getNODEnext(current));
+                        items->size -= 1;
                     return val;
             }
             current = getNODEnext(current); //set both to next
             trailing = getNODEnext(trailing);
                 
         }
-    }
+    
     return NULL;
 }
 
