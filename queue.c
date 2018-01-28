@@ -47,7 +47,8 @@ void displayQUEUE(QUEUE *items,FILE * fp)
         for(int i = 0; i < sizeSLL(items->sll) ; i++)
         {
             items->display(getSLL(items->sll, i), fp);
-            printf(",");
+             if(i != sizeSLL(items->sll)-1)
+                printf(",");
         }
         printf(">");
 }

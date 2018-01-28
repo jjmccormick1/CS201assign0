@@ -49,7 +49,8 @@ void displaySTACK(STACK *items,FILE * fp)
         for(int i = 0; i < sizeDLL(items->dll) ; i++)
         {
             items->display(getDLL(items->dll, i), fp);
-            printf(",");
+            if(i != sizeDLL(items->dll)-1)
+                printf(",");
         }
         printf("|");
             
