@@ -74,8 +74,7 @@ void insertSLL(SLL *items,int index,void *value)
     return;
 }
 void * removeSLL(SLL *items,int index)
-{
-
+{   
     if(index == 0) //remove at front
     {
         void * val = getNODEvalue(items->head);
