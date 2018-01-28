@@ -36,7 +36,7 @@ test-stack: all integer.o
 	
 test-queue: all integer.o
 	@$(CC) $(CFLAGS)  queue-0-0.c
-	@$(CC) $(LFLAGS) $(COREOBJS) queue-0-0.o integer.o -o test-stack
+	@$(CC) $(LFLAGS) $(COREOBJS) queue-0-0.o integer.o -o test-queue
 
 test: clean test-dll test-sll test-stack test-queue
 	@echo "Testing SLL .. \n"
@@ -47,6 +47,8 @@ test: clean test-dll test-sll test-stack test-queue
 	@./test-stack
 	@echo "Testing Queue .. \n"
 	@./test-queue
+	
+	
 clean:
 	@rm -f *.o || true
 	@rm -f *.a || true

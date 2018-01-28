@@ -83,38 +83,22 @@ void * removeSLL(SLL *items,int index)
             items->size -= 1;
         return val;
     }
-    if(index == items->size-1 )
-    {
-        void * val = getNODEvalue(items->tail);
-        
-        NODE * current = items->head;
-        for(int i = 0; i<items->size; i++)
-        {
-                if(getNODEnext(getNODEnext(current)) == 0)
-                    break;
-                current = getNODEnext(current);
-        }
-        items->tail = getNODEnext(current);
-        setNODEnext(current, items->tail);
-        items->size -= 1;
-        return val;
-    }
 
-        NODE * current = items->head; //Make a couple temp
-        NODE * trailing = items->head;//pointers for insertion
-        current = getNODEnext(current);//get current one step ahead
+
+    NODE * current = items->head; //Make a couple temp
         
-        for(int i = 1; i < items->size; i++) //dont start at front so current lags by one
+    for(int i = 1; i < items->size; i++) //dont start at front so current lags by one
+    {
+        if(i == index-1)
         {
-            if(i == index)
-            {
-                    void * val = getNODEvalue(current);
-                    setNODEnext(trailing,getNODEnext(current));
-                        items->size -= 1;
-                    return val;
-            }
-            current = getNODEnext(current); //set both to next
-            trailing = getNODEnext(trailing);
+                NODE * temp = getNODEnext(current);
+                void * val = getNODEvalue(temp);
+                setNODEnext(current,getNODEnext(temp));
+                setNODEnext(temp,temp);
+                items->size -= 1;
+                return val;
+        }
+        current = getNODEnext(current); //set both to next
                 
         }
     
