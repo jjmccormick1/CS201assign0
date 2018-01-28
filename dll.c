@@ -89,7 +89,12 @@ void *removeDLL(DLL *items,int index)
     {
         void * val = getNODEvalue(items->head);
         items->head = getNODEnext(items->head);
+        
         items->size -= 1;
+        if(items->size == 1)
+        {
+         items->tail = items->head;   
+        }
         return val;
     }
     if(index == items->size-1 )

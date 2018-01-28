@@ -49,10 +49,10 @@ test: clean test-dll test-sll test-stack test-queue
 	@./test-queue
 
 valgrind:
-	@valgrind ./test-sll --leak-test=full
-	@valgrind ./test-dll --leak-test=full
-	@valgrind ./test-stack --leak-test=full
-	@valgrind ./test-queue --leak-test=full
+	@valgrind ./test-sll --leak-check=full
+	@valgrind ./test-dll --leak-check=full
+	@valgrind ./test-stack --leak-check=full
+	@valgrind ./test-queue --leak-check=full
 	
 clean:
 	@rm -f *.o || true
