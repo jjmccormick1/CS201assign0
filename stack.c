@@ -2,7 +2,7 @@
  //stack.c
  //CS 201 Assignment 0
 
-    #include <stdio.h>
+
 #include <assert.h>
 #include <stdlib.h>
 #include "dll.h"
@@ -10,12 +10,16 @@
 
 struct stack{
     DLL * dll;
+    void (*display)(void *, FILE *);
+    void (*free)(void *);
 };
 
 STACK *newSTACK(void (*d)(void *,FILE *),void (*f)(void *))
 {
     STACK * items = malloc(sizeof(STACK));
-    stack->dll= newDLL(d,f);
+    items->dll= newDLL(d,f);
+    items->display = d;
+    items->free = f;
     return items;
 }
 
@@ -41,13 +45,13 @@ int sizeSTACK(STACK *items)
 
 void displaySTACK(STACK *items,FILE * fp)
 {
-        fprintf("|",fp);
+        printf("|");
         for(int i = 0; i < sizeDLL(items->dll) ; i++)
         {
-            items->dll->display(getDLL(i), fp);
-            fprintf(",",fp)
+            items->display(getDLL(items->dll, i), fp);
+            printf(",");
         }
-        fprintf("|",fp);
+        printf("|");
             
 }
 

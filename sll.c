@@ -125,7 +125,7 @@ void *getSLL(SLL *items,int index)
             current = getNODEnext(current); //set both to next
                 
         }
-        return;
+        return NULL;
 }
 
 void setSLL(SLL *items,int index,void *value)

@@ -74,7 +74,8 @@ void insertDLL(DLL *items,int index,void *value)
 
 void *removeDLL(DLL *items,int index)
 {
- 
+    if(items->size == 0)
+        return NULL;
     if(index == 0) //remove at front
     {
         void * val = getNODEvalue(items->head);
@@ -82,9 +83,14 @@ void *removeDLL(DLL *items,int index)
         items->size -= 1;
         return val;
     }
-    
-    else
+    if(index == items->size-1 )
     {
+        void * val = getNODEvalue(items->tail);
+        items->tail = getNODEprev(items->tail);
+        items->size -= 1;
+        return val;
+    }
+
         NODE * current = items->head; //Make a couple temp
         NODE * trailing = items->head;//pointers for insertion
         current = getNODEnext(current);//get current one step ahead
@@ -104,7 +110,6 @@ void *removeDLL(DLL *items,int index)
             trailing = getNODEnext(trailing);
                 
         }
-    }
     
     return NULL;       
 }

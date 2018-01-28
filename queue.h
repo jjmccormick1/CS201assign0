@@ -2,7 +2,7 @@
 #ifndef __QUEUE_INCLUDED__
     #define __QUEUE_INCLUDED__
 
-
+#include <stdio.h>
 
     typedef struct queue QUEUE;
 
