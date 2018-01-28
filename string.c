@@ -6,10 +6,10 @@
 #include <assert.h>
 #include "string.h"
 
-struct STRING
+struct string
     {
     char * value;
-    } STRING;
+    };
 
 STRING * newSTRING(char * x)
     {
@@ -37,8 +37,7 @@ void displaySTRING(void *v,FILE *fp)
     fprintf(fp,"%s",getSTRING(STRING * v));
     }
 
-int 
-compareSTRING(void *v,void *w)
+int compareSTRING(void *v,void *w)
     {
     return strcmp(getSTRING(v), getINTEGER(w));
     }
@@ -46,5 +45,5 @@ compareSTRING(void *v,void *w)
 void
 freeSTRING(void *v)
     {
-    free((STRING * v);
+    free(STRING * v);
     }
