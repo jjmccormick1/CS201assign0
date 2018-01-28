@@ -1,37 +1,59 @@
 CC=gcc
-CFLAGS=  -Wall -Wextra -c -ggdb -pedantic -std=c99 -O0
+CFLAGS=  -Wall -Wextra -c -ggdb -pedantic -std=c99 -D_XOPEN_SOURCE=600 -O0
 LFLAGS=  -Wall -Wextra -pedantic  -std=c99 -ggdb
-COREOBJS= node.o sll.o dll.o
+COREOBJS= node.o sll.o dll.o stack.o queue.o
 
-all:	lib
+all:	
+	@$(CC) $(CFLAGS) node.c node.h 
+	@$(CC) $(CFLAGS) sll.c sll.h 
+	@$(CC) $(CFLAGS) dll.c dll.h 
+	@$(CC) $(CFLAGS) stack.c stack.h 
+	@$(CC) $(CFLAGS) queue.c queue.h
 
-lib:	
-	@$(CC) $(CFLAGS) node.c node.h sll.c sll.h dll.c dll.h
-	#@ar rc liblistlib.a $(COREOBJS)
-	#@ranlib liblistlib.a
-
+lib: all
+	@ar rc liblistlib.a $(COREOBJS)
+	@ranlib liblistlib.a
+	@echo "Static Library Created.\n"
 	
 string: 
 	@$(CC) $(CFLAGS) string.c string.h
-
-test-sll.o:
-	@$(CC) $(CFLAGS)  test-sll.c 
 	
-test-sll: all integer.o test-sll.o
-	@$(CC) $(LFLAGS) test-sll.o integer.o sll.o dll.o node.o -o test-sll
-
-test-dll.o: 
-	@$(CC) $(CFLAGS)  test-dll.c
+integer.o:
+	@$(CC) $(CFLAGS) integer.c integer.h
 	
-test-dll: all integer.o test-dll.o
-	@$(CC) $(LFLAGS) test-dll.o integer.o sll.o dll.o node.o -o test-dll
+test-sll: all integer.o 
+	@$(CC) $(CFLAGS)  sll-0-0.c 
+	@$(CC) $(LFLAGS) $(COREOBJS) sll-0-0.o integer.o -o test-sll
 
-test: clean test-dll test-sll
+	
+test-dll: all integer.o 
+	@$(CC) $(CFLAGS)  dll-0-0.c
+	@$(CC) $(LFLAGS) $(COREOBJS) dll-0-0.o integer.o -o test-dll
+	
+test-stack: all integer.o
+	@$(CC) $(CFLAGS)  stack-0-0.c
+	@$(CC) $(LFLAGS) $(COREOBJS) stack-0-0.o integer.o -o test-stack
+	
+test-queue: all integer.o
+	@$(CC) $(CFLAGS)  queue-0-0.c
+	@$(CC) $(LFLAGS) $(COREOBJS) queue-0-0.o integer.o -o test-stack
+
+test: clean test-dll test-sll test-stack test-queue
 	@echo "Testing SLL .. \n"
 	@./test-sll
 	@echo "Testing DLL .. \n"
 	@./test-dll
+	@echo "Testing Stack .. \n"
+	@./test-stack
+	@echo "Testing Queue .. \n"
+	@./test-queue
 clean:
 	@rm -f *.o || true
 	@rm -f *.a || true
-@rm -f *.gch || true
+	@rm -f *.gch || true
+	@rm -f test-sll
+	@rm -f test-dll
+	@rm -f test-stack
+	@rm -f test-queue
+	@rm -f nodetest
+	@rm -f test-integer

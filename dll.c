@@ -186,7 +186,10 @@ void displayDLLdebug(DLL *items,FILE *file)
 	    }
 	    printf("}, tail->{");
         if(items->size > 0)
+        {
             items->display(getNODEvalue(current),file);
+        }
+        
 	    printf("};");
 }
 void freeDLL(DLL *items)
