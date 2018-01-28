@@ -34,10 +34,18 @@ void insertDLL(DLL *items,int index,void *value)
 {
     NODE * newNode = newNODE(value,0);
     //setNODEnext(newNode,newNode); //set new now next to itself
-    if(items->size == 0)
+    if(items->size == 0) //only node in so far
     {
         items->head = newNode;
-        items->tail = items->head;
+        items->tail = newNode;
+        items->size += 1;
+        return;
+    }
+    if(index == 0) //insert at front
+    {
+        setNODEnext(newNode,items->head);
+        setNODEprev(items->head, newNode);
+        items->head = newNode;
         items->size += 1;
         return;
     }
@@ -53,7 +61,7 @@ void insertDLL(DLL *items,int index,void *value)
     NODE *trailing = items->head;
     NODE * current = items->head;
     current = getNODEnext(current);
-    items->size += 1;
+
     for(int i = 1;i<items->size;i++)
     {
         if(i == index)
@@ -62,6 +70,7 @@ void insertDLL(DLL *items,int index,void *value)
             setNODEprev(newNode,trailing);
             setNODEnext(newNode,current);
             setNODEprev(current, newNode);
+                items->size += 1;
             return;
         }
         current = getNODEnext(current);
@@ -74,7 +83,8 @@ void insertDLL(DLL *items,int index,void *value)
 
 void *removeDLL(DLL *items,int index)
 {
- 
+    if(items->size == 0)
+        return NULL;
     if(index == 0) //remove at front
     {
         void * val = getNODEvalue(items->head);
@@ -82,9 +92,14 @@ void *removeDLL(DLL *items,int index)
         items->size -= 1;
         return val;
     }
-    
-    else
+    if(index == items->size-1 )
     {
+        void * val = getNODEvalue(items->tail);
+        items->tail = getNODEprev(items->tail);
+        items->size -= 1;
+        return val;
+    }
+
         NODE * current = items->head; //Make a couple temp
         NODE * trailing = items->head;//pointers for insertion
         current = getNODEnext(current);//get current one step ahead
@@ -104,7 +119,6 @@ void *removeDLL(DLL *items,int index)
             trailing = getNODEnext(trailing);
                 
         }
-    }
     
     return NULL;       
 }
@@ -163,7 +177,7 @@ void displayDLL(DLL *items,FILE *file)
 void displayDLLdebug(DLL *items,FILE *file)
 {
 	NODE * current = items->head;
-	    printf("{");
+	    printf("head->{");
 	    for(int i = 0; i<items->size-1; i++)
 	    {
 	    	void * tmp = getNODEvalue(current);
@@ -178,10 +192,11 @@ void displayDLLdebug(DLL *items,FILE *file)
 void freeDLL(DLL *items)
 {
     NODE * current = items->head;
-    for(int i = 1; i<items->size; i++)
+    for(int i = 0; i < items->size; i++)
     {
-        items->free(getNODEvalue(current));
-        current = getNODEnext(current);
+            NODE * temp = getNODEnext(current);
+            items->free(current);
+            current = temp;
     }
     free(items);
     return;

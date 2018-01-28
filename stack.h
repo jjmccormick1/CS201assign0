@@ -2,7 +2,7 @@
 #ifndef __STACK_INCLUDED__
     #define __STACK_INCLUDED__
 
-
+    #include <stdio.h>
     typedef struct stack STACK;
 
     extern STACK *newSTACK(void (*d)(void *,FILE *),void (*f)(void *)); 

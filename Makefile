@@ -1,6 +1,6 @@
 
 CC=gcc
-CFLAGS=  -Wall -Wextra -c -ggdb -pedantic -std=c99 -O0
+CFLAGS=  -Wall -Wextra -c -ggdb -pedantic -std=c99 -D_XOPEN_SOURCE=600 -O0
 LFLAGS=  -Wall -Wextra -pedantic  -std=c99 -ggdb
 COREOBJS= node.o sll.o dll.o stack.o queue.o
 
@@ -8,10 +8,8 @@ all:	lib
 
 lib:	
 	@$(CC) $(CFLAGS) node.c node.h sll.c sll.h dll.c dll.h stack.c stack.h queue.c queue.h
-	@ar rc	 liblistlib.a $(COREOBJS)
-	@ranlib liblistlib.a
-
 	
+		
 string: 
 	@$(CC) $(CFLAGS) string.c string.h
 	
@@ -21,6 +19,7 @@ test-node :
 
 integer.o: 
 	@$(CC) $(CFLAGS) integer.c integer.h
+<<<<<<< HEAD
 
 string.o:
 	@$(CC) $(CFLAGS) string.c string.h
@@ -40,12 +39,42 @@ test-stack: all integer.o string.o
 test-queue: all integer.o string.o 
 	@$(CC) $(CFLAGS) test-queue.c
 	@$(CC) $(LFLAGS) $(COREOBJS) test-queue.o string.o integer.o -o test-queue
+=======
+	
+	
+test-sll: all integer.o 
+	@$(CC) $(CFLAGS)  sll-0-0.c
+	@$(CC) $(LFLAGS) sll-0-0.o integer.o sll.o node.o -o test-sll
 
-test: clean  test-sll test-dll
+test-dll: all integer.o
+	@$(CC) $(CFLAGS)  dll-0-0.c
+	@$(CC) $(LFLAGS) dll-0-0.o integer.o sll.o dll.o node.o -o test-dll
+>>>>>>> 26e7559abca53a8831254d13f197bd83e564a9f8
+
+test-stack: all integer.o
+	@$(CC) $(CFLAGS)  stack-0-0.c
+	@$(CC) $(LFLAGS) $(COREOBJS) stack-0-0.o integer.o -o test-stack
+	
+test-queue: all integer.o
+	@$(CC) $(CFLAGS)  queue-0-0.c
+	@$(CC) $(LFLAGS) $(COREOBJS) queue-0-0.o integer.o -o test-queue
+	
+test: clean  test-sll test-dll test-stack test-queue
 	@echo "Testing SLL .. \n"
 	@./test-sll
 	@echo "Testing DLL .. \n"
 	@./test-dll
+	@echo "Testing Stack .. \n"
+	@./test-stack
+	@echo "Testing Queue .. \n"
+	@./test-queue
+	
+valgrind: test
+	@./valgrind test-sll
+	@./valgrind test-dll
+	@./valgrind test-stack
+	@./valgrind test-queue
+	
 clean:
 	@rm -f *.o || true
 	@rm -f *.a || true
