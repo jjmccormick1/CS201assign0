@@ -47,7 +47,12 @@ test: clean test-dll test-sll test-stack test-queue
 	@./test-stack
 	@echo "Testing Queue .. \n"
 	@./test-queue
-	
+
+valgrind:
+	@valgrind ./test-sll --leak-test=full
+	@valgrind ./test-dll --leak-test=full
+	@valgrind ./test-stack --leak-test=full
+	@valgrind ./test-queue --leak-test=full
 	
 clean:
 	@rm -f *.o || true
