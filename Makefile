@@ -23,20 +23,20 @@ integer.o:
 	
 test-sll: all integer.o 
 	@$(CC) $(CFLAGS)  sll-0-0.c 
-	@$(CC) $(LFLAGS) $(COREOBJS) sll-0-0.o integer.o -o test-sll
+	@$(CC) $(LFLAGS) node.o sll.o sll-0-0.o integer.o -o test-sll
 
 	
 test-dll: all integer.o 
 	@$(CC) $(CFLAGS)  dll-0-0.c
-	@$(CC) $(LFLAGS) $(COREOBJS) dll-0-0.o integer.o -o test-dll
+	@$(CC) $(LFLAGS) node.o dll.o dll-0-0.o integer.o -o test-dll
 	
 test-stack: all integer.o
 	@$(CC) $(CFLAGS)  stack-0-0.c
-	@$(CC) $(LFLAGS) $(COREOBJS) stack-0-0.o integer.o -o test-stack
+	@$(CC) $(LFLAGS) node.o dll.o stack.o stack-0-0.o integer.o -o test-stack
 	
 test-queue: all integer.o
 	@$(CC) $(CFLAGS)  queue-0-0.c
-	@$(CC) $(LFLAGS) $(COREOBJS) queue-0-0.o integer.o -o test-queue
+	@$(CC) $(LFLAGS) node.o sll.o queue.o queue-0-0.o integer.o -o test-queue
 
 test: clean test-dll test-sll test-stack test-queue
 	@echo "Testing SLL .. \n"
