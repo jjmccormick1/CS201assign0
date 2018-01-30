@@ -4,7 +4,6 @@ LFLAGS=  -Wall -Wextra -pedantic  -std=c99 -ggdb
 COREOBJS=  sll.o dll.o stack.o queue.o
 
 all:	
-	#@$(CC) $(CFLAGS) node.c node.h 
 	@$(CC) $(CFLAGS) sll.c sll.h 
 	@$(CC) $(CFLAGS) dll.c dll.h 
 	@$(CC) $(CFLAGS) stack.c stack.h 
