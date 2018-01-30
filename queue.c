@@ -54,7 +54,26 @@ void displayQUEUE(QUEUE *items,FILE * fp)
 }
 void displayQUEUEdebug(QUEUE *items,FILE * fp)
 {
-    displaySLLdebug(items->sll, fp);
+    if(sizeSLL(items->sll) == 1)
+        {
+            printf("head->{");
+            items->display(getSLL(items->sll, 0), fp);
+            printf("},tail->{");
+            items->display(getSLL(items->sll, 0), fp);
+            printf("}");
+            return;
+        }
+        printf("head->{");
+        for(int i = 0; i < sizeSLL(items->sll) ; i++)
+        {
+            if(i == (sizeSLL(items->sll) - 1))
+                printf("}, tail->{");
+            items->display(getSLL(items->sll, i), fp);
+            if(i < (sizeSLL(items->sll)-2))
+                printf(",");
+            
+        }
+        printf("}");
 }
 
 void freeQUEUE(QUEUE *items)
