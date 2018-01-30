@@ -1,10 +1,10 @@
 CC=gcc
 CFLAGS=  -Wall -Wextra -c -ggdb -pedantic -std=c99 -D_XOPEN_SOURCE=600 -O0
 LFLAGS=  -Wall -Wextra -pedantic  -std=c99 -ggdb
-COREOBJS= node.o sll.o dll.o stack.o queue.o
+COREOBJS=  sll.o dll.o stack.o queue.o
 
 all:	
-	@$(CC) $(CFLAGS) node.c node.h 
+	#@$(CC) $(CFLAGS) node.c node.h 
 	@$(CC) $(CFLAGS) sll.c sll.h 
 	@$(CC) $(CFLAGS) dll.c dll.h 
 	@$(CC) $(CFLAGS) stack.c stack.h 
@@ -23,20 +23,20 @@ integer.o:
 	
 test-sll: all integer.o 
 	@$(CC) $(CFLAGS)  sll-0-0.c 
-	@$(CC) $(LFLAGS) node.o sll.o sll-0-0.o integer.o -o test-sll
+	@$(CC) $(LFLAGS)  sll.o sll-0-0.o integer.o -o test-sll
 
 	
 test-dll: all integer.o 
 	@$(CC) $(CFLAGS)  dll-0-0.c
-	@$(CC) $(LFLAGS) node.o dll.o dll-0-0.o integer.o -o test-dll
+	@$(CC) $(LFLAGS)  dll.o dll-0-0.o integer.o -o test-dll
 	
 test-stack: all integer.o
 	@$(CC) $(CFLAGS)  stack-0-0.c
-	@$(CC) $(LFLAGS) node.o dll.o stack.o stack-0-0.o integer.o -o test-stack
+	@$(CC) $(LFLAGS)  dll.o stack.o stack-0-0.o integer.o -o test-stack
 	
 test-queue: all integer.o
 	@$(CC) $(CFLAGS)  queue-0-0.c
-	@$(CC) $(LFLAGS) node.o sll.o queue.o queue-0-0.o integer.o -o test-queue
+	@$(CC) $(LFLAGS)  sll.o queue.o queue-0-0.o integer.o -o test-queue
 
 test: clean test-dll test-sll test-stack test-queue
 	@echo "Testing SLL .. \n"
