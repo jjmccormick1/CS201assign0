@@ -58,7 +58,27 @@ void displaySTACK(STACK *items,FILE * fp)
 
 void displaySTACKdebug(STACK *items,FILE * fp)
 {
-        displayDLLdebug(items->dll, fp);
+        
+        if(sizeDLL(items->dll) == 1)
+        {
+            printf("head->{");
+            items->display(getDLL(items->dll, 0), fp);
+            printf("},tail->{");
+            items->display(getDLL(items->dll, 0), fp);
+            printf("}");
+            return;
+        }
+        printf("head->{");
+        for(int i = 0; i < sizeDLL(items->dll) ; i++)
+        {
+            if(i == (sizeDLL(items->dll) - 1))
+                printf("}, tail->{");
+            items->display(getDLL(items->dll, i), fp);
+            if(i < (sizeDLL(items->dll)-2))
+                printf(",");
+            
+        }
+        printf("}");
 }
 
 void freeSTACK(STACK *items)
