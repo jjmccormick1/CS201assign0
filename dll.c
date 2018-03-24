@@ -4,7 +4,6 @@
 // CS201 Assignment 0
 #include <stdio.h>
 #include "dll.h"
-#include "node.h"    
 #include <assert.h>
 #include <stdlib.h>
 
@@ -169,6 +168,8 @@ void displayDLL(DLL *items,FILE *file)
     for(int i = 0; i<items->size; i++)
     {
         items->display(getNODEvalue(current),file);
+        if(i != items->size - 1)
+                fprintf(file,",");
         current = getNODEnext(current);
     }
     printf("}");
@@ -182,6 +183,8 @@ void displayDLLdebug(DLL *items,FILE *file)
 	    {
 	    	void * tmp = getNODEvalue(current);
 	        items->display(tmp,file);
+            if(i != items->size - 1)
+                fprintf(file,",");
 	        current = getNODEnext(current);
 	    }
 	    printf("}, tail->{");

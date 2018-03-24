@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 #include <assert.h>
-#include "node.h"
+//#include "node.h"
 #include "sll.h"
 
 struct sll
@@ -151,13 +151,15 @@ int sizeSLL(SLL *items)
 void displaySLL(SLL *items,FILE * fp)
 {
     NODE * current = items->head;
-    printf("{");
+    fprintf(fp,"{");
     for(int i = 0; i < items->size; i++)
     {
             items->display(getNODEvalue(current), fp);
+            if(i != items->size - 1)
+                fprintf(fp,",");
             current = getNODEnext(current);
     }
-    printf("}");
+    fprintf(fp,"}");
     return;
     
 }
@@ -168,6 +170,8 @@ void displaySLLdebug(SLL *items,FILE * fp)
     for(int i = 0; i < items->size -1 && items->size > 0; i++)
     {
             items->display(getNODEvalue(current), fp);
+            if(i != items->size - 1)
+                fprintf(fp,",");
             current = getNODEnext(current);
     }
     printf("}, tail->{");
